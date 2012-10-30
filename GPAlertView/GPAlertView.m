@@ -86,15 +86,6 @@ static void radialGradient(CGContextRef context, CGRect rect, CGColorRef startCo
         // Background radial gradient view
         _originalWindow = [[[UIApplication sharedApplication] delegate] window];
         
-        _dimWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        _dimWindow.windowLevel = UIWindowLevelStatusBar;
-        
-        _dimView = [[QPDimView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
-        _dimView.backgroundColor = [UIColor clearColor];
-        _dimView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        
-        [_dimWindow addSubview:_dimView];
-        
         _backgroundImageView = [[UIView alloc] initWithFrame:CGRectInset(self.bounds, 5.f, 0.f)];
         [self addSubview:_backgroundImageView];
         
@@ -136,6 +127,7 @@ static void radialGradient(CGContextRef context, CGRect rect, CGColorRef startCo
     [_subtitleLabel release];
     [_bodyTextLabel release];
     [_dimView release];
+    [_dimWindow release];
     [_backgroundImageView release];
 	[super dealloc];
 }
@@ -236,10 +228,20 @@ static void radialGradient(CGContextRef context, CGRect rect, CGColorRef startCo
 }
 
 - (void)show {
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(show) name:UIWindowDidBecomeVisibleNotification object:nil];
     
-    [_dimWindow addSubview:self];
-    [_dimWindow makeKeyAndVisible];
+    if (!_dimWindow) {
+    
+        _dimWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        _dimWindow.windowLevel = UIWindowLevelStatusBar;
+        
+        _dimView = [[QPDimView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+        _dimView.backgroundColor = [UIColor clearColor];
+        _dimView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
+        [_dimWindow addSubview:_dimView];
+        [_dimWindow addSubview:self];
+        [_dimWindow makeKeyAndVisible];
+    }
     
     if ([self.delegate respondsToSelector:@selector(willPresentAlertView:)]) {
         [self.delegate willPresentAlertView:self];
@@ -372,9 +374,6 @@ static void radialGradient(CGContextRef context, CGRect rect, CGColorRef startCo
 }
 
 - (void)dismissAnimated:(BOOL)animated {
-    if ([self.delegate respondsToSelector:@selector(alertView:didDismissWithButtonIndex::)]) {
-        [self.delegate alertView:self didDismissWithButtonIndex:_dismissButtonIndex];
-    }
     if (!animated) {
         [UIView animateWithDuration:0.15
                               delay:0
@@ -383,18 +382,21 @@ static void radialGradient(CGContextRef context, CGRect rect, CGColorRef startCo
                              _dimWindow.alpha = 0.f;
                          }
                          completion:^(BOOL finished) {
-                             [_dimWindow resignKeyWindow];
+                             [self removeFromSuperview];
                              [_originalWindow makeKeyWindow];
                          }];
+    }
+    if ([self.delegate respondsToSelector:@selector(alertView:didDismissWithButtonIndex:)]) {
+        [self.delegate alertView:self didDismissWithButtonIndex:_dismissButtonIndex];
     }
 }
 
 - (void)dismissWithClickedButtonIndex:(int)index animated:(BOOL)animated {
-    if ([self.delegate respondsToSelector:@selector(alertView:willDismissWithButtonIndex:)]) {
-        [self.delegate alertView:self willDismissWithButtonIndex:_dismissButtonIndex];
-    }
     if ([self.delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]) {
         [self.delegate alertView:self clickedButtonAtIndex:_dismissButtonIndex];
+    }
+    if ([self.delegate respondsToSelector:@selector(alertView:willDismissWithButtonIndex:)]) {
+        [self.delegate alertView:self willDismissWithButtonIndex:_dismissButtonIndex];
     }
     [self dismissAnimated:animated];
 }
@@ -502,6 +504,8 @@ static void radialGradient(CGContextRef context, CGRect rect, CGColorRef startCo
     animation.duration = .2;
 	
     [self.layer addAnimation:animation forKey:@"popup"];
+    
+    
     if ([self.delegate respondsToSelector:@selector(didPresentAlertView:)]) {
         [self.delegate didPresentAlertView:self];
     }

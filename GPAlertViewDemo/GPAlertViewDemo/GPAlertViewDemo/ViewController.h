@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GPAlertView.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <GPAlertViewDelegate>
 
 @end

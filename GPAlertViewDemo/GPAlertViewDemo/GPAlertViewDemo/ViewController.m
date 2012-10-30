@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "GPAlertView.h"
 
 @interface ViewController ()
 
@@ -43,6 +42,33 @@
                            nil] autorelease];
     [alert setAlertViewStyle:GPAlertViewStyleLoginAndPasswordInput];
     [alert show];
+}
+
+#pragma mark -
+#pragma mark GPAlertView Delegate Methods
+
+- (void)alertView:(GPAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"Clicked : %@", [alertView buttonTitleAtIndex:buttonIndex]);
+}
+
+- (void)willPresentAlertView:(GPAlertView *)alertView {
+    NSLog(@"will present alertview");
+}
+
+- (void)didPresentAlertView:(GPAlertView *)alertView {
+    NSLog(@"did present alertview");
+}
+
+- (void)alertView:(GPAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
+    NSLog(@"will dissmiss with button : %@", [alertView buttonTitleAtIndex:buttonIndex]);
+}
+
+- (void)alertView:(GPAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    NSLog(@"did dismiss with button : %@", [alertView buttonTitleAtIndex:buttonIndex]);
+}
+
+- (void)alertViewCancel:(GPAlertView *)alertView {
+    NSLog(@"cancelled");
 }
 
 @end
