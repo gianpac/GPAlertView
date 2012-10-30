@@ -3,15 +3,18 @@ GPAlertView
 
 Reverse engineered `UIAlertView`
 Useful when control is needed over the alertview.
-Supports iOS 4.3 for the new `UIAlertViewStyle` introduce in iOS 5.0
+Supports iOS 4.3 for the new `UIAlertViewStyle` introduced in iOS 5.0
 
 Uses CoreGraphics to do all the drawing needed.
 
 **Usage**
 
-`GPAlertView *alertView = [[GPAlertView alloc] initWithTitle:@"Lorem Ipsum" message:@"Lorem ipsum dolor sit amet, consectetur adipiscing elit. " delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Continue", @"one", @"two", nil] autorelease];`
-`[alert setAlertViewStyle:GPAlertViewStyleLoginAndPasswordInput];`
-`[alert show];`
+    GPAlertView *alertView = [[GPAlertView alloc] initWithTitle:@"Lorem Ipsum" 
+                                                        message:@"Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+                                                       delegate:self cancelButtonTitle:@"Cancel"       
+                                              otherButtonTitles:@"Continue", @"one", @"two", nil] autorelease];         
+    [alert setAlertViewStyle:GPAlertViewStyleLoginAndPasswordInput];        
+    [alert show];
 
 **MIT License**
 
