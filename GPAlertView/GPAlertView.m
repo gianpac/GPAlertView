@@ -71,14 +71,14 @@ static void radialGradient(CGContextRef context, CGRect rect, CGColorRef startCo
 
 @implementation GPAlertView
 
-- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id /*<UIAlertViewDelegate>*/)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... {
+- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id /*<GPAlertViewDelegate>*/)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... {
 	self = [super initWithFrame:[[UIScreen mainScreen] applicationFrame]];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         // Defaults
-        self.alertViewStyle = AKAlertViewStyleDefault;
+        self.alertViewStyle = GPAlertViewStyleDefault;
         self.delegate = delegate;
         _buttons = [[NSMutableArray alloc] init];
         _textFields = [[NSMutableArray alloc] init];
@@ -143,9 +143,9 @@ static void radialGradient(CGContextRef context, CGRect rect, CGColorRef startCo
 #pragma mark -
 #pragma mark Accessors
 
-- (void)setAlertViewStyle:(AKAlertViewStyle)alertViewStyle {
+- (void)setAlertViewStyle:(GPAlertViewStyle)alertViewStyle {
     switch (alertViewStyle) {
-        case AKAlertViewStyleLoginAndPasswordInput:
+        case GPAlertViewStyleLoginAndPasswordInput:
             // Add Text fields
             for (int i=0;i<2;i++) {
                 [self _addTextFieldWithTag:i];

@@ -9,9 +9,9 @@
 #import "GPAlertViewDelegate.h"
 
 typedef enum {
-    AKAlertViewStyleDefault =0,
-    AKAlertViewStyleLoginAndPasswordInput
-}AKAlertViewStyle;
+    GPAlertViewStyleDefault =0,
+    GPAlertViewStyleLoginAndPasswordInput
+}GPAlertViewStyle;
 
 @interface GPAlertView : UIView
 
@@ -21,7 +21,7 @@ typedef enum {
 
 @property(nonatomic,readonly) NSInteger numberOfButtons;
 
-- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id /*<UIAlertViewDelegate>*/)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...;
+- (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id /*<GPAlertViewDelegate>*/)delegate cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...;
 
 // adds a button with the title. returns the index (0 based) of where it was added. buttons are displayed in the order added except for the
 // cancel button which will be positioned based on HI requirements. buttons cannot be customized.
@@ -35,7 +35,7 @@ typedef enum {
 - (void)show;
 
 // Alert view style - defaults to UIAlertViewStyleDefault
-@property(nonatomic,assign) AKAlertViewStyle alertViewStyle;
+@property(nonatomic,assign) GPAlertViewStyle alertViewStyle;
 
 /* Retrieve a text field at an index - raises NSRangeException when textFieldIndex is out-of-bounds.
  The field at index 0 will be the first text field (the single field or the login field), the field at index 1 will be the password field. */

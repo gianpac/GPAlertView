@@ -41,7 +41,7 @@
                            //@"one",
                            //@"two",
                            nil] autorelease];
-    [alert setAlertViewStyle:AKAlertViewStyleLoginAndPasswordInput];
+    [alert setAlertViewStyle:GPAlertViewStyleLoginAndPasswordInput];
     [alert show];
 }
 
