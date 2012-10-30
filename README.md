@@ -9,9 +9,12 @@ Uses CoreGraphics to do all the drawing needed.
 
 **Usage**
 
-`GPAlertView *alertView = [[GPAlertView alloc] initWithTitle:@"Lorem Ipsum" message:@"Lorem ipsum dolor sit amet, consectetur adipiscing elit. " delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Continue", @"one", @"two", nil] autorelease];`
-`[alert setAlertViewStyle:GPAlertViewStyleLoginAndPasswordInput];`
-`[alert show];`
+    GPAlertView *alertView = [[GPAlertView alloc] initWithTitle:@"Lorem Ipsum" 
+                                                        message:@"Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+                                                       delegate:self cancelButtonTitle:@"Cancel"       
+                                              otherButtonTitles:@"Continue", @"one", @"two", nil] autorelease];         
+    [alert setAlertViewStyle:GPAlertViewStyleLoginAndPasswordInput];        
+    [alert show];
 
 **MIT License**
 
